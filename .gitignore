@@ -9,6 +9,12 @@
 pip-log.txt
 pip-delete-this-directory.txt
 
+# code products
+dogos/prepared_data/
+dogos/my_model/
+dogos/my_images/
+venv/
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
