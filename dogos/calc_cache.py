@@ -36,13 +36,12 @@ def make_json(dog_data, dog_id):
     for i in range(0, len(dog_data)):
         dog_info = {}
         dog_info['id'] = dog_data[i]['id']
+        dog_info['dpt'] = dog_data[i]['refuge_name'][:2]
         dog_info['image_filename'] = dog_data[i]['image_filename']
         dog_info['name'] = dog_data[i]['name']
         dog_info['url'] = dog_data[i]['url']
         dog_json['dog' + str(i)] = dog_info
     response['response'] = dog_json
-    # print dog_data
-    # print dog_json
 
     return response
 
@@ -54,10 +53,10 @@ if __name__ == "__main__":
     db=client.dogos
     db.dogos.delete_many({})
     # Issue the serverStatus command and print the results
-    serverStatusResult=db.command("serverStatus")
-    pprint(serverStatusResult)
+    # serverStatusResult=db.command("serverStatus")
+    # pprint(serverStatusResult)
 
-    for dog_id in xrange(0, len(images)):
+    for dog_id in xrange(len(images)):
         dogo = images[dog_id: dog_id + 1]
         neighbours = query_model(dogo, model, images)
         resp = db.dogos.insert_one(make_json(dogo.append(neighbours), dog_id))
