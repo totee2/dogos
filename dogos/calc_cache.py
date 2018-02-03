@@ -50,13 +50,17 @@ if __name__ == "__main__":
     images = graphlab.load_sframe(path + 'my_images')
     model = graphlab.load_model(path + 'my_model')
     client = MongoClient("localhost")
-    db=client.dogos
-    db.dogos.delete_many({})
+    db = client.dogos
+
     # Issue the serverStatus command and print the results
     # serverStatusResult=db.command("serverStatus")
     # pprint(serverStatusResult)
 
-    for dog_id in xrange(len(images)):
+    for dog_id in xrange(5): # xrange(len(images)):
         dogo = images[dog_id: dog_id + 1]
         neighbours = query_model(dogo, model, images)
-        resp = db.dogos.insert_one(make_json(dogo.append(neighbours), dog_id))
+        resp = db.dogos_temp.insert_one(make_json(dogo.append(neighbours), dog_id))
+
+    db.dogos.drop()
+    db.dogos_temp.rename('dogos')
+    db.dogos.create_index('query')
