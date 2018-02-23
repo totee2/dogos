@@ -59,7 +59,7 @@ if __name__ == "__main__":
     num_images = len(images)
 
     for dog_id in xrange(num_images):
-        print "Query " + dog_id + " in " + num_images
+        print "Query %d in %d" % (dog_id, num_images)
         dogo = images[dog_id: dog_id + 1]
         neighbours = query_model(dogo, model, images)
         resp = db.dogos_temp.insert_one(make_json(dogo.append(neighbours), dog_id))
