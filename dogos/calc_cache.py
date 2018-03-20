@@ -1,5 +1,6 @@
 from pymongo import MongoClient
-from pprint import pprint
+import time
+import datetime
 import graphlab
 from graphlab import SFrame
 
@@ -41,6 +42,7 @@ def make_json(dog_data, dog_id):
         dog_info['name'] = dog_data[i]['name']
         dog_info['url'] = dog_data[i]['url']
         dog_json['dog' + str(i)] = dog_info
+        dog_json['timestamp'] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
     response['response'] = dog_json
 
     return response
