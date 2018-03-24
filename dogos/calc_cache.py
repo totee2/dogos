@@ -33,6 +33,7 @@ def query_model(dogo, model, images):
 
 def make_json(dog_data, dog_id):
     response = {"query": dog_id}
+    response['timestamp'] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
     dog_json = {}
     for i in range(0, len(dog_data)):
         dog_info = {}
@@ -42,7 +43,6 @@ def make_json(dog_data, dog_id):
         dog_info['name'] = dog_data[i]['name']
         dog_info['url'] = dog_data[i]['url']
         dog_json['dog' + str(i)] = dog_info
-        dog_json['timestamp'] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
     response['response'] = dog_json
 
     return response
