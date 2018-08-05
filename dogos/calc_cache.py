@@ -3,6 +3,7 @@ import time
 import datetime
 import graphlab
 from graphlab import SFrame
+import argparse
 
 path = ''
 
@@ -49,6 +50,10 @@ def make_json(dog_data, dog_id):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Name of database')
+    parser.add_argument('db_name')
+    args = parser.parse_args()
+
     images = graphlab.load_sframe(path + 'my_images')
     model = graphlab.load_model(path + 'my_model')
     client = MongoClient("localhost")
@@ -67,5 +72,5 @@ if __name__ == "__main__":
         resp = db.dogos_temp.insert_one(make_json(dogo.append(neighbours), dog_id))
 
     db.dogos.drop()
-    db.dogos_temp.rename('dogos')
+    db.dogos_temp.rename(args.db_name)
     db.dogos.create_index('query')
