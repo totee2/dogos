@@ -71,6 +71,11 @@ if __name__ == "__main__":
         neighbours = query_model(dogo, model, images)
         resp = db.dogos_temp.insert_one(make_json(dogo.append(neighbours), dog_id))
 
-    db.dogos.drop()
-    db.dogos_temp.rename(args.db_name)
-    db.dogos.create_index('query')
+    if args.db_name == 'dogos':
+        db.dogos.drop()
+        db.dogos_temp.rename(args.db_name)
+        db.dogos.create_index('query')
+    else:
+        db.gatos.drop()
+        db.dogos_temp.rename(args.db_name)
+        db.gatos.create_index('query')
