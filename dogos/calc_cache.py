@@ -58,6 +58,7 @@ if __name__ == "__main__":
     model = graphlab.load_model(path + 'my_model')
     client = MongoClient("localhost")
     db = client.dogos
+    db.dogos_temp.drop()
 
     # Issue the serverStatus command and print the results
     # serverStatusResult=db.command("serverStatus")
